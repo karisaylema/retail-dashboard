@@ -1,6 +1,9 @@
-.PHONY: setup data run tf-init tf-plan tf-apply tf-destroy
+.PHONY: setup data run docker-build docker-run docker-stop docker-logs tf-init tf-plan tf-apply tf-destroy
 
-# ── Local dev ─────────────────────────────────────────────────────────────────
+IMAGE  = retail-dashboard
+PORT   = 8501
+
+# ── Local dev (Python) ────────────────────────────────────────────────────────
 setup:
 	python3 -m venv venv
 	./venv/bin/pip install --upgrade pip
@@ -11,6 +14,20 @@ data:
 
 run:
 	./venv/bin/streamlit run app.py
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+docker-build:
+	docker build -t $(IMAGE):local .
+
+docker-run: docker-build
+	docker compose up -d
+	@echo "Dashboard → http://localhost:$(PORT)"
+
+docker-stop:
+	docker compose down
+
+docker-logs:
+	docker compose logs -f
 
 # ── Terraform ─────────────────────────────────────────────────────────────────
 tf-init:

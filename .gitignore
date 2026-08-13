@@ -21,6 +21,9 @@ terraform/terraform.tfstate.backup
 terraform/terraform.tfvars       # contains sensitive values
 terraform/crash.log
 
+# Docker
+*.tar
+
 # macOS
 .DS_Store
 

@@ -62,18 +62,29 @@ resource "aws_s3_object" "dataset" {
   etag   = filemd5("${path.module}/../data/retail_data.csv")
 }
 
-resource "aws_s3_object" "app" {
-  bucket = aws_s3_bucket.data.id
-  key    = "app/app.py"
-  source = "${path.module}/../app.py"
-  etag   = filemd5("${path.module}/../app.py")
+locals {
+  app_files = {
+    "app/app.py"                        = "${path.module}/../app.py"
+    "app/requirements.txt"              = "${path.module}/../requirements.txt"
+    "app/Dockerfile"                    = "${path.module}/../Dockerfile"
+    "app/src/__init__.py"               = "${path.module}/../src/__init__.py"
+    "app/src/config.py"                 = "${path.module}/../src/config.py"
+    "app/src/data/__init__.py"          = "${path.module}/../src/data/__init__.py"
+    "app/src/data/loader.py"            = "${path.module}/../src/data/loader.py"
+    "app/src/components/__init__.py"    = "${path.module}/../src/components/__init__.py"
+    "app/src/components/charts.py"      = "${path.module}/../src/components/charts.py"
+    "app/src/components/echarts.py"     = "${path.module}/../src/components/echarts.py"
+    "app/src/components/kpi.py"         = "${path.module}/../src/components/kpi.py"
+    "app/src/components/sidebar.py"     = "${path.module}/../src/components/sidebar.py"
+  }
 }
 
-resource "aws_s3_object" "requirements" {
-  bucket = aws_s3_bucket.data.id
-  key    = "app/requirements.txt"
-  source = "${path.module}/../requirements.txt"
-  etag   = filemd5("${path.module}/../requirements.txt")
+resource "aws_s3_object" "app_files" {
+  for_each = local.app_files
+  bucket   = aws_s3_bucket.data.id
+  key      = each.key
+  source   = each.value
+  etag     = filemd5(each.value)
 }
 
 # ── IAM role for EC2 → S3 ─────────────────────────────────────────────────────

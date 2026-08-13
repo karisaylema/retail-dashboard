@@ -1,0 +1,24 @@
+services:
+  dashboard:
+    build:
+      context: .
+      target: runtime
+    image: retail-dashboard:local
+    container_name: retail-dashboard
+    ports:
+      - "8501:8501"
+    volumes:
+      # Mount local data so the container reads CSV without S3
+      - ./data:/app/data:ro
+    environment:
+      - LOCAL_PATH=/app/data/retail_data.csv
+      - AWS_REGION=${AWS_REGION:-us-east-1}
+      - S3_BUCKET=${S3_BUCKET:-}
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:8501/healthz')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    restart: unless-stopped

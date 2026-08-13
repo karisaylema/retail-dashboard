@@ -1,0 +1,12 @@
+venv/
+__pycache__/
+*.py[cod]
+.git/
+.gitignore
+*.pem
+.env
+terraform/
+.DS_Store
+*.pdf
+README.md
+Makefile
