@@ -1,0 +1,30 @@
+# Python
+venv/
+__pycache__/
+*.py[cod]
+.env
+*.egg-info/
+dist/
+build/
+
+# Data — large files go to S3, not Git
+data/*.csv
+
+# SSH keys
+*.pem
+
+# Terraform
+terraform/.terraform/
+terraform/.terraform.lock.hcl
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/terraform.tfvars       # contains sensitive values
+terraform/crash.log
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp

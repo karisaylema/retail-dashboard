@@ -1,0 +1,6 @@
+# Copy this file to terraform.tfvars and adjust values
+aws_region       = "us-east-1"
+project_name     = "retail-dashboard"
+instance_type    = "t3.micro"
+allowed_ssh_cidr = "0.0.0.0/0"   # restrict to your IP in production
+streamlit_port   = 8501
