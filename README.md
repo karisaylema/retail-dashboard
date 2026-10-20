@@ -2,6 +2,11 @@
 
 Interactive retail analytics dashboard built with **Streamlit** + **Plotly** + **Apache ECharts**, deployable on AWS with **Terraform**.
 
+
+![Dashboard overview: KPI cards, animated stacked-area chart and filters](docs/overview.png)
+
+![Dashboard charts: sales vs profit, category mix, regions, segments, discount impact](docs/charts.png)
+
 ## Project structure
 
 ```
